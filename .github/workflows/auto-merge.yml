@@ -1,0 +1,41 @@
+name: Auto-Merge Upstream
+
+on:
+  schedule:
+    # Runs automatically every day at midnight UTC
+    - cron: '0 0 * * *'
+  # Allows you to trigger the workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  merge-upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Fetches full history so the merge can happen correctly
+          fetch-depth: 0 
+          # Change 'main' to your default branch name if different
+          ref: main 
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Add Upstream Remote
+        run: |
+          # REPLACE the URL below with the actual upstream repository URL
+          git remote add upstream https://github.com/googlesamples/android-testdpc.git
+          git fetch upstream
+
+      - name: Merge Upstream
+        run: |
+          # Change 'upstream/main' to 'upstream/master' if necessary
+          git merge upstream/main --no-edit
+
+      - name: Push Changes
+        run: |
+          # Change 'main' to 'master' if necessary
+          git push origin main
