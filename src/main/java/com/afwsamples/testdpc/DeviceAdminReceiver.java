@@ -87,6 +87,7 @@ public class DeviceAdminReceiver extends android.app.admin.DeviceAdminReceiver {
     }
   }
 
+  /* TODO(b/210723613): fix build version and re-add it
   @Override
   @TargetApi(VERSION_CODES.S)
   public void onOperationSafetyStateChanged(Context context, int reasonType, boolean safe) {
@@ -103,6 +104,7 @@ public class DeviceAdminReceiver extends android.app.admin.DeviceAdminReceiver {
     String message = context.getString(R.string.safety_operations_change_message, reason, status);
     showToast(context, message);
   }
+  */
 
   @TargetApi(VERSION_CODES.N)
   @Override
@@ -370,6 +372,7 @@ public class DeviceAdminReceiver extends android.app.admin.DeviceAdminReceiver {
 
   @TargetApi(VERSION_CODES.O)
   @Override
+  @SuppressWarnings("UnspecifiedImmutableFlag") // TODO(b/210723613): proper fix
   public void onPasswordFailed(Context context, Intent intent, UserHandle user) {
     if (!Process.myUserHandle().equals(user)) {
       // This password failure was on another user, for example a parent profile. Ignore it.
@@ -527,6 +530,7 @@ public class DeviceAdminReceiver extends android.app.admin.DeviceAdminReceiver {
     bw.close();
   }
 
+  @SuppressWarnings("UnspecifiedImmutableFlag") // TODO(b/210723613): proper fix
   private static void updatePasswordConstraintNotification(Context context) {
     final DevicePolicyManager dpm =
         (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);

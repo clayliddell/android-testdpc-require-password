@@ -932,4 +932,12 @@
             testdpc:minSdkVersion="U" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/app_security_category">
+        <com.afwsamples.testdpc.common.preference.DpcPreference
+            android:key="change_app_password"
+            android:title="@string/change_app_password"
+            testdpc:admin="any"
+            testdpc:minSdkVersion="L" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

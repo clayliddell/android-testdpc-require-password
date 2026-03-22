@@ -23,7 +23,6 @@ import android.app.admin.SecurityLog.SecurityEvent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -652,20 +651,6 @@ public final class DevicePolicyManagerGatewayImpl implements DevicePolicyManager
   }
 
   @Override
-  public boolean canUsbDataSignalingBeDisabled() {
-    boolean result = false;
-    if (Util.isAtLeastS()) {
-      try {
-        result = mDevicePolicyManager.canUsbDataSignalingBeDisabled();
-      } catch (Exception e) {
-        Log.e(TAG, "Error calling canUsbDataSignalingBeDisabled()", e);
-        result = false;
-      }
-    }
-    return result;
-  }
-
-  @Override
   public void setPreferentialNetworkServiceEnabled(
       boolean enabled, Consumer<Void> onSuccess, Consumer<Exception> onError) {
     Log.d(TAG, "setPreferentialNetworkServiceEnabled(" + enabled + ")");
@@ -1122,18 +1107,6 @@ public final class DevicePolicyManagerGatewayImpl implements DevicePolicyManager
   }
 
   @Override
-  public void setScreenCaptureDisabled(
-      boolean disabled, Consumer<Void> onSuccess, Consumer<Exception> onError) {
-    Log.d(TAG, "setScreenCaptureDisabled(" + disabled + ")");
-    try {
-      mDevicePolicyManager.setScreenCaptureDisabled(mAdminComponentName, disabled);
-      onSuccess.accept(null);
-    } catch (Exception e) {
-      onError.accept(e);
-    }
-  }
-
-  @Override
   public void setMaximumFailedPasswordsForWipe(int max, Consumer<Void> onSuccess,
       Consumer<Exception> onError) {
     Log.d(TAG, "setMaximumFailedPasswordsForWipe(" + max + ")");
@@ -1348,29 +1321,6 @@ public final class DevicePolicyManagerGatewayImpl implements DevicePolicyManager
     List<UserHandle> secondaryUsers = mDevicePolicyManager.getSecondaryUsers(mAdminComponentName);
     Log.d(TAG, "getSecondaryUsers(): " + secondaryUsers);
     return secondaryUsers;
-  }
-
-  @Override
-  public void clearPackagePersistentPreferredActivities(@NonNull String packageName, 
-      Consumer<Boolean> onSuccess, Consumer<Exception> onError) {
-    Log.d(TAG, "clearPackagePersistentPreferredActivities(" + packageName + ")");
-    try {
-      mDevicePolicyManager.clearPackagePersistentPreferredActivities(mAdminComponentName, packageName);
-      onSuccess.accept(null);
-    } catch (Exception e) {
-      onError.accept(e);
-    }
-  }
-
-  @Override
-  public void addPersistentPreferredActivity(ComponentName activityComponentName, IntentFilter filter, Consumer<Boolean> onSuccess, Consumer<Exception> onError) {
-    Log.d(TAG, "addPersistentPreferredActivity(" + activityComponentName + ", " + Util.toString(filter) + ")");
-    try {
-      mDevicePolicyManager.addPersistentPreferredActivity(mAdminComponentName, filter, activityComponentName);
-      onSuccess.accept(null);
-    } catch (Exception e) {
-      onError.accept(e);
-    }
   }
 
   @Override

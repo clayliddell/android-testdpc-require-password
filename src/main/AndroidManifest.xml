@@ -19,9 +19,9 @@
     xmlns:tools="http://schemas.android.com/tools"
           package="com.afwsamples.testdpc"
           tools:ignore="MissingClass"
-           android:versionCode="9014"
-           android:versionName="9.0.14">
-    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35"/>
+           android:versionCode="9012"
+           android:versionName="9.0.12">
+    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="34"/>
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
@@ -83,10 +83,10 @@
         <intent-filter>
             <action android:name="android.intent.action.MAIN"/>
             <category android:name="android.intent.category.LAUNCHER"/>
-            <!-- Categories set it as a launcher activity, so it can be changed by addPersistentPreferredActivity(). -->
-            <category android:name="android.intent.category.HOME" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.LAUNCHER_APP" />
+        </intent-filter>
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
+            <category android:name="android.intent.category.LAUNCHER"/>
         </intent-filter>
         <intent-filter>
             <action android:name="android.app.action.CHECK_POLICY_COMPLIANCE"/>
@@ -279,21 +279,18 @@
                 android:exported="true"
                 android:permission="android.permission.BIND_DEVICE_ADMIN"/>
 
-        <!-- Ignore NewApi lint check because this service is only enabled on API26+. -->
-        <!-- TODO: Address lint failing without removing the check (if possible) -->
         <service
                 android:name=".DeviceAdminService"
                 android:enabled="@bool/is_o_or_later"
                 android:exported="true"
-                android:permission="android.permission.BIND_DEVICE_ADMIN"
-                tools:ignore="NewAPI">
+                android:permission="android.permission.BIND_DEVICE_ADMIN">
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_SERVICE" />
             </intent-filter>
         </service>
 
         <service android:name=".feedback.AppStatesService"
-                 android:exported="true">
+                 android:exported="false">
           <intent-filter>
             <action android:name="androidx.enterprise.feedback.action.APP_STATES" />
           </intent-filter>

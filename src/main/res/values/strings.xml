@@ -118,7 +118,6 @@
     <string name="requires_network_logs">Requires network logging to be enabled</string>
     <string name="requires_security_logs">Requires security logging to be enabled</string>
     <string name="not_for_password_quality">Not applicable to current password quality</string>
-    <string name="not_for_this_device">Not applicable to this device</string>
 
     <string name="this_is_a_device_owner">This app is the device owner.</string>
     <string name="this_is_a_profile_owner">This app is a profile owner.</string>
@@ -789,9 +788,7 @@
     <string name="user_management">User management</string>
     <string name="create_and_initialize_user">Create and initialize user</string>
     <string name="create_and_manage_user">Create and manage user</string>
-    <string name="not_supported_on_hsum">Not supported on HSUM mode</string>
     <string name="create_managed_profile">Create managed profile</string>
-    <string name="comp_not_supported_since_r">COMP mode deprecated since Android R</string>
     <string name="skip_setup_wizard">Skip setup wizard</string>
     <string name="make_user_ephemeral">Make user ephemeral</string>
     <string name="start_user_in_background">Start user in background</string>
@@ -1317,5 +1314,21 @@
     <string name="credential_manager_clear_policy">Clear policy</string>
     <string name="credential_manager_policy_applied_toast">Policy has been applied</string>
     <string name="credential_manager_policy_title">Enter package name of Credential Provider</string>
+
+    <!-- Password Authentication Strings -->
+    <string name="ok">OK</string>
+    <string name="create_password_title">Create Password</string>
+    <string name="enter_password_title">Enter Password</string>
+    <string name="change_password_title">Change Password</string>
+    <string name="password_hint">Password</string>
+    <string name="old_password_hint">Current Password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="incorrect_password">Incorrect password</string>
+    <string name="incorrect_old_password">Incorrect current password</string>
+    <string name="password_must_be_alphanumeric">Password must contain only letters and numbers</string>
+    <string name="password_changed_successfully">Password changed successfully</string>
+    <string name="change_app_password">Change App Password</string>
+    <string name="app_security_category">App Security</string>
 
 </resources>

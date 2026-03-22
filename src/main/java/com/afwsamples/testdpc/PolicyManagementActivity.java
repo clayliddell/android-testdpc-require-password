@@ -29,6 +29,8 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import com.afwsamples.testdpc.auth.PasswordDialogFragment;
+import com.afwsamples.testdpc.auth.PasswordManager;
 import com.afwsamples.testdpc.common.DumpableActivity;
 import com.afwsamples.testdpc.common.OnBackPressedHandler;
 import com.afwsamples.testdpc.policy.PolicyManagementFragment;
@@ -97,6 +99,62 @@ public class PolicyManagementActivity extends DumpableActivity
     }
 
     askNotificationPermission();
+    checkAuthentication();
+  }
+
+  private void checkAuthentication() {
+    PasswordManager passwordManager = new PasswordManager(this);
+    
+    // Skip authentication if already authenticated
+    if (passwordManager.isAuthenticated()) {
+      return;
+    }
+
+    // Check if password has been set
+    if (!passwordManager.hasPassword()) {
+      // First launch - show create password dialog
+      showPasswordDialog(PasswordDialogFragment.Mode.CREATE);
+    } else {
+      // Subsequent launch - show authenticate dialog
+      showPasswordDialog(PasswordDialogFragment.Mode.AUTHENTICATE);
+    }
+  }
+
+  private void showPasswordDialog(PasswordDialogFragment.Mode mode) {
+    // Check if dialog is already showing
+    PasswordDialogFragment existingDialog = (PasswordDialogFragment) getFragmentManager()
+        .findFragmentByTag(PasswordDialogFragment.TAG);
+    if (existingDialog != null) {
+      return;
+    }
+
+    PasswordDialogFragment dialog = PasswordDialogFragment.newInstance(mode);
+    dialog.setListener(new PasswordDialogFragment.PasswordDialogListener() {
+      @Override
+      public void onPasswordCreated(String password) {
+        PasswordManager passwordManager = new PasswordManager(PolicyManagementActivity.this);
+        passwordManager.setPassword(password);
+        passwordManager.setAuthenticated(true);
+      }
+
+      @Override
+      public void onPasswordAuthenticated() {
+        // Authentication state already set by dialog
+      }
+
+      @Override
+      public void onPasswordChanged(String newPassword) {
+        // Handled elsewhere
+      }
+
+      @Override
+      public void onCancelled() {
+        // For AUTHENTICATE mode, we can't allow cancellation
+        // Just close the app
+        finish();
+      }
+    });
+    dialog.show(getFragmentManager(), PasswordDialogFragment.TAG);
   }
 
   @Override
@@ -107,6 +165,13 @@ public class PolicyManagementActivity extends DumpableActivity
 
   @Override
   public void onBackPressed() {
+    // Prevent back button if authentication is required
+    PasswordManager passwordManager = new PasswordManager(this);
+    if (!passwordManager.hasPassword() || !passwordManager.isAuthenticated()) {
+      // Don't allow back while authentication dialog is showing
+      return;
+    }
+
     Fragment currFragment = getFragmentManager().findFragmentById(R.id.container);
     boolean onBackPressHandled = false;
     if (currFragment != null && currFragment instanceof OnBackPressedHandler) {
