@@ -16,8 +16,8 @@ jobs:
         with:
           # Fetches full history so the merge can happen correctly
           fetch-depth: 0 
-          # Change 'main' to your default branch name if different
-          ref: main 
+          # Change 'master' to your default branch name if different
+          ref: master
 
       - name: Configure Git
         run: |
@@ -32,10 +32,8 @@ jobs:
 
       - name: Merge Upstream
         run: |
-          # Change 'upstream/main' to 'upstream/master' if necessary
-          git merge upstream/main --no-edit
+          git merge upstream/master --no-edit
 
       - name: Push Changes
         run: |
-          # Change 'main' to 'master' if necessary
-          git push origin main
+          git push origin master
